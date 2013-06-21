@@ -1,0 +1,15 @@
+Package: BbiParser
+Type: Package
+Title: Provides an interface to Big Binary Indexed Wig and Bed files
+Version: 1.0
+Date: 2013-06-12
+Author: Martin Jakt
+Maintainer: Martin Jakt <mjakt@z2.keio.jp>
+Description: Provides an interface to Big Binary Indexed Wig and Bed files
+	     BigWig or BigBed. These files are used to store details of genomic
+	     or epigenomic features like CHIP-seq as part of the Encode project.
+	     This package provides C-classes that parse these files, along with
+	     an Rcpp based interface to those classes.
+License: GPL-2
+Depends: Rcpp (>= 0.10.3)
+LinkingTo: Rcpp
