@@ -44,6 +44,16 @@ BigFile::BigFile(const char* fileName)
     }
     zoomHeaders.push_back(zh);
   }
+  // if we the header has defined a totalSummaryOffset, then read this in
+  // 
+  if(header->totalSummaryOffset);
+  in.seekg(header->totalSummaryOffset);
+  if(!in.good()){
+    errorString = "Unable to seek to beginning of totalSummary";
+    return;
+  }
+  summary = new TotalSummary(in, header->reverse_bytes);
+
   in.seekg(header->chromosomeTreeOffset);
   if(!in.good()){
     errorString = "Unable to seek to beginning of chromosomeTree";
@@ -116,13 +126,72 @@ WigSegment* BigFile::segment(std::string chrName, unsigned int beg, unsigned int
 	      << chrName << " : " << beg << " --> " << end << std::endl;
     return(0);
   }
-  std::vector<BigWigSegment*> bwSegments;
+
+  // FIX ME PLEASE //
+  // this is a bit ugly since we can make a WigSegment from either
+  // BigWigSegments for BigBedSegments ..  but we need to know which
+  bool isBigWig = !header->isBigBed;
+  if(isBigWig){
+    std::vector<BigWigSegment*> bwSegments;
+    for(unsigned int i=0; i < nodes.size(); ++i)
+      bwSegments.push_back(new BigWigSegment(in, nodes[i], header));
+    WigSegment* ws = new WigSegment(bwSegments, chrId, chrName);
+    
+    //// Ugly code alert ////
+    for(unsigned int i=0; i < bwSegments.size(); ++i)
+      delete bwSegments[i];
+    return(ws);
+  }
+  // And even uglier code ///
+  std::vector<BigBedSegment*> bedSegments;
   for(unsigned int i=0; i < nodes.size(); ++i)
-    bwSegments.push_back(new BigWigSegment(in, nodes[i], header));
-  WigSegment* ws = new WigSegment(bwSegments, chrId, chrName);
-  
-  //// Ugly code alert ////
-  for(unsigned int i=0; i < bwSegments.size(); ++i)
-    delete bwSegments[i];
+    bedSegments.push_back(new BigBedSegment(in, nodes[i], header));
+  WigSegment* ws = new WigSegment(bedSegments, chrId, chrName);
+  for(unsigned int i=0; i < bedSegments.size(); ++i)
+    delete bedSegments[i];
   return(ws);
+}
+
+std::vector<ChromInfo> BigFile::chromInfo()
+{
+  std::vector<ChromInfo> ci; // on error return this
+  ci.reserve(chromosomes.size());
+  for(std::map<unsigned int, ChromInfo>::iterator it=chromosomes.begin();
+      it != chromosomes.end(); ++it)
+    ci.push_back( (*it).second );
+
+  return(ci);
+}
+
+std::string BigFile::autoSqlString()
+{
+  return(header->autoSqlString);
+}
+
+unsigned int BigFile::fieldCount()
+{
+  return(header->fieldCount);
+}
+
+unsigned int BigFile::definedFieldCount()
+{
+  return(header->definedFieldCount);
+}
+
+TotalSummary BigFile::Summary()
+{
+  // the disadvantage of using a pointer. If pointer is 0
+  // not so good to dereference it.
+  if(summary)
+    return(*summary);
+
+  std::cout << "Warning, no summary defined" << std::endl;
+  TotalSummary ts;
+  return(ts);
+}
+
+void BigFile::printHeaderSummary()
+{
+  if(header)
+    header->print_summary();
 }

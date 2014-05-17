@@ -1,22 +1,11 @@
 #include "BbiParser.h"
 #include "read_big/BigFile.h"
 #include "export_structures/WigSegment.h"
+#include "R_Cpp/util_functions.h"
 #include <string>
 #include <vector>
 #include <map>
 
-
-Rcpp::List make_return_data(std::string chr_name,
-			   std::vector<unsigned int> start, std::vector<unsigned int> end,
-			   std::vector<float> value)
-{
-  return( Rcpp::List::create(Rcpp::Named("chrName", chr_name),
-			     Rcpp::Named("starts", start),
-			     Rcpp::Named("ends", end),
-			     Rcpp::Named("values", value)
-			     ));
-}
-  
 
 SEXP Bbi_get_wig_region(SEXP file_name, SEXP chr_name, SEXP start, SEXP end)
 {

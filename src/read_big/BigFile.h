@@ -13,10 +13,11 @@
 #include <vector>
 #include <fstream>
 #include "../export_structures/WigSegment.h"
+#include "ChromosomeNode.h"
+#include "TotalSummary.h"
 
 class BigHeader;
 class ZoomHeader;
-class TotalSummary;
 class ChromosomeBTree;
 class R_Tree;
 
@@ -31,6 +32,13 @@ class BigFile {
   bool good();
   
   WigSegment* segment(std::string chrName, unsigned int beg, unsigned int end);
+  std::vector<ChromInfo> chromInfo();
+  std::string autoSqlString();
+  unsigned int fieldCount();
+  unsigned int definedFieldCount();
+  TotalSummary Summary();
+
+  void printHeaderSummary();
 
  private:
   std::ifstream in;

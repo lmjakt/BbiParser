@@ -42,7 +42,9 @@ class BigWigSegment {
   const float* values();
   std::vector<unsigned int> starts(); // starts and ends need to be
   std::vector <unsigned int> ends();  // copies as they may not exist
+  std::vector<std::string> opt_fields(); // returns an empty vector
   std::vector<WigRow> rows(int beg=-1, int end=-1);
+  
 
   WigType wigType();
 

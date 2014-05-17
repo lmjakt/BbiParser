@@ -8,6 +8,7 @@ TotalSummary::TotalSummary()
 {
   error = 1;
   basesCovered = 0;
+  minVal=maxVal=sumData=sumSquares=0;
 }
 
 TotalSummary::TotalSummary(std::ifstream& in, bool reverse)

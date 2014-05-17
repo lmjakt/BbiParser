@@ -26,6 +26,8 @@ struct R_TreeSubNode {
     if(chrom != endChromIx) return endChromIx > chrom;
     return( endBase > base );
   }
+  unsigned int node_no();
+  unsigned int leaf_node_no();
   unsigned int startChromIx;
   unsigned int startBase;
   unsigned int endChromIx;

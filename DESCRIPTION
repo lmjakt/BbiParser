@@ -13,3 +13,4 @@ Description: Provides an interface to Big Binary Indexed Wig and Bed files
 License: GPL-2
 Depends: Rcpp (>= 0.10.3)
 LinkingTo: Rcpp
+RcppModules: mod_RcppBigFile

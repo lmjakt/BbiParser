@@ -2,6 +2,7 @@ TEMPLATE = app
 CONFIG = warn_on debug
 LIBS	    += -lz -lm
 HEADERS = util/ByteReader.h \
+	  util/StringUtil.h \
 	  read_big/BigHeader.h \
 	  read_big/ZoomHeader.h \
 	  read_big/TotalSummary.h \
@@ -10,10 +11,13 @@ HEADERS = util/ByteReader.h \
 	  read_big/R_Tree.h \
 	  read_big/R_TreeNode.h \
 	  read_big/BigWigSegment.h \
+	  read_big/BigBedSegment.h \
+	  read_big/BedArbitraryData.h \
 	  read_big/DataSegment.h \
 	  read_big/BigFile.h \
 	  export_structures/WigSegment.h 
 SOURCES = util/ByteReader.cpp \
+	  util/StringUtil.cpp \
 	  read_big/BigHeader.cpp \
 	  read_big/ZoomHeader.cpp \
 	  read_big/TotalSummary.cpp \
@@ -22,6 +26,8 @@ SOURCES = util/ByteReader.cpp \
 	  read_big/R_Tree.cpp \
 	  read_big/R_TreeNode.h \
 	  read_big/BigWigSegment.cpp \
+	  read_big/BigBedSegment.cpp \
+	  read_big/BedArbitraryData.cpp \
 	  read_big/DataSegment.cpp \
 	  read_big/BigFile.cpp \
 	  export_structures/WigSegment.cpp \

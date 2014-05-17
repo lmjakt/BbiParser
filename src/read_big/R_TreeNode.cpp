@@ -52,6 +52,16 @@ bool R_TreeSubNode::overlaps(unsigned int chromBeg, unsigned int start,
   return( less_than(chromEnd, end) && greater_than(chromBeg, start) );
 }
 
+unsigned int R_TreeSubNode::node_no()
+{
+  return(node_counter);
+}
+
+unsigned int R_TreeSubNode::leaf_node_no()
+{
+  return(leaf_node_counter);
+}
+
 R_TreeNode::R_TreeNode(std::ifstream& in, R_TreeNode* parent, size_t offset, bool reverse)
 {
   file_offset = offset;

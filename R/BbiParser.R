@@ -1,3 +1,4 @@
+loadModule("mod_RcppBigFile", TRUE)
 
 rcpp_hello_world <- function(){
 	.Call( "rcpp_hello_world", PACKAGE = "BbiParser" )

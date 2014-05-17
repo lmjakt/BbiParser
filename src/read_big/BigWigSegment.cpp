@@ -159,6 +159,12 @@ std::vector<unsigned int> BigWigSegment::ends()
   return(e);
 }
 
+std::vector<std::string> BigWigSegment::opt_fields()
+{
+  std::vector<std::string> s;
+  return(s);
+}
+
 std::vector<WigRow> BigWigSegment::rows(int beg, int end)
 {
   std::vector<WigRow> r;
